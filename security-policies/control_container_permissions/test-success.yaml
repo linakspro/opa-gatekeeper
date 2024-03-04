@@ -7,11 +7,11 @@ metadata:
 spec:
   securityContext:
     supplementalGroups:
-      - 199
-    fsGroup: 199
+      - 1990
+    fsGroup: 1990
   containers:
     - name: nginx
       image: nginx
       securityContext:
-        runAsUser: 199
-        runAsGroup: 199
+        runAsUser: 1990
+        runAsGroup: 1990
