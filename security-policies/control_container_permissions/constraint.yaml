@@ -11,20 +11,20 @@ spec:
     runAsUser:
       rule: MustRunAs # MustRunAsNonRoot # RunAsAny 
       ranges:
-        - min: 100
-          max: 200
+        - min: 1000
+          max: 2000
     runAsGroup:
       rule: MustRunAs # MayRunAs # RunAsAny 
       ranges:
-        - min: 100
-          max: 200
+        - min: 1000
+          max: 2000
     supplementalGroups:
       rule: MustRunAs # MayRunAs # RunAsAny 
       ranges:
-        - min: 100
-          max: 200
+        - min: 1000
+          max: 2000
     fsGroup:
       rule: MustRunAs # MayRunAs # RunAsAny 
       ranges:
-        - min: 100
-          max: 200
+        - min: 1000
+          max: 2000
