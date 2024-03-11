@@ -32,7 +32,7 @@ spec:
         import data.lib.exclude_update.is_update
 
         violation[{"msg": msg, "details": {}}] {
-            # spec.hostPID and spec.hostIPC fields are immutable.
+            # spec.hostPID fields are immutable.
             not is_update(input.review)
 
             input_share_hostnamespace(input.review.object)
@@ -41,9 +41,6 @@ spec:
 
         input_share_hostnamespace(o) {
             o.spec.hostPID
-        }
-        input_share_hostnamespace(o) {
-            o.spec.hostIPC
         }
       libs:
         - |
