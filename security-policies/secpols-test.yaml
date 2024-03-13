@@ -1,0 +1,152 @@
+//block_privileged_escalation
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-privilege-escalation-allowed
+  labels:
+    app: nginx-privilege-escalation
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    securityContext:
+      allowPrivilegeEscalation: false
+
+//require_run_as_non_root_user
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-users-allowed
+  labels:
+    app: nginx-users
+spec:
+  securityContext:
+    supplementalGroups:
+      - 199
+    fsGroup: 199
+  containers:
+    - name: nginx
+      image: nginx
+      securityContext:
+        runAsUser: 199
+        runAsGroup: 199
+
+//block-use-of-nodeport-services
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-web-service
+spec:
+  selector:
+    app: my-web-app
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+
+//block-use-of-host-pid
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-host-namespace-allowed
+  labels:
+    app: nginx-host-namespace
+spec:
+  hostPID: false
+  containers:
+  - name: nginx
+    image: nginx
+
+//block-use-of-host-ipc
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-host-namespace-allowed
+  labels:
+    app: nginx-host-namespace
+spec:
+  hostIPC: false
+  containers:
+  - name: nginx
+    image: nginx
+
+//block-modification-of-resource-quotas
+apiVersion: v1
+kind: Pod
+metadata:
+  name: opa-allowed
+  labels:
+    owner: me.agilebank.demo
+spec:
+  containers:
+    - name: opa
+      image: openpolicyagent/opa:0.9.2
+      args:
+        - "run"
+        - "--server"
+        - "--addr=localhost:8080"
+      resources:
+        limits:
+          cpu: "100m"
+          memory: "1Gi"
+
+
+//block-host-path-volumes
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-host-filesystem
+  labels:
+    app: nginx-host-filesystem-disallowed
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+        - mountPath: /cache
+          name: cache-volume
+          readOnly: true
+  volumes:
+    - name: cache-volume
+      hostPath:
+        path: /foo/bar
+
+
+//privileged-container
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-privileged-allowed
+  labels:
+    app: nginx-privileged
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    securityContext:
+      privileged: false
+
+//volume-types
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-volume-types-allowed
+  labels:
+    app: nginx-volume-types
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - mountPath: /cache
+      name: cache-volume
+  - name: nginx2
+    image: nginx
+    volumeMounts:
+    - mountPath: /cache2
+      name: demo-vol
+  volumes:
+  - name: cache-volume
+    emptyDir: {}
+  - name: demo-vol
+    emptyDir: {}
