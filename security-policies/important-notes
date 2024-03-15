@@ -1,0 +1,32 @@
+kubectl -n n1 exec p1 -- curl 192.168.16.70
+kubectl -n n1 exec p1 -- curl 192.168.23.157
+ 
+kubectl -n n2 exec p1 -- curl 192.168.49.94
+kubectl -n n2 exec p1 -- curl 192.168.23.157
+ 
+kubectl -n n3 exec p1 -- curl 192.168.49.94
+kubectl -n n3 exec p1 -- curl 192.168.16.70
+
+
+n1 - 192.168.49.94
+n2 - 192.168.16.70
+n3 - 192.168.23.157
+
+{
+  "enableNetworkPolicy": "true",
+  "nodeAgent": {
+      "enableCloudWatchLogs": "true"
+  }
+}
+
+
+host-filesystem				                version-1709959788	(block_host_path_volumes)
+volume-types				                  version-1709959788
+privileged-container			            version-1709959788
+host-network-ports			              version-1709959788	(block_use_of_host_networking_and_ports)
+
+block-privileged-escalation		        v1
+block-use-of-host-pid			            v1
+block-use-of-host-ipc			            v1
+block-modification-of-resource-quotas	v1
+block-use-of-nodeport-services		    v1
