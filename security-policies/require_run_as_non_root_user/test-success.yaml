@@ -1,16 +1,17 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-users-allowed
+  name: p3
+  namespace: n1
   labels:
-    app: nginx-users
+    app: p3
 spec:
   securityContext:
     supplementalGroups:
       - 199
     fsGroup: 199
   containers:
-    - name: nginx
+    - name: p3
       image: nginx
       securityContext:
         runAsNonRoot: true
