@@ -13,5 +13,6 @@ spec:
     - name: nginx
       image: nginx
       securityContext:
+        runAsNonRoot: true
         runAsUser: 199
-        runAsGroup: 199
+#        runAsGroup: 199
