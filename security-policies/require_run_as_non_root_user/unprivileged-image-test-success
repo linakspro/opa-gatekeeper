@@ -1,0 +1,21 @@
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: p2
+  namespace: default
+  labels:
+spec:
+  securityContext:
+    runAsNonRoot: true
+    supplementalGroups:
+      - 199
+    fsGroup: 199
+  containers:
+    - name: p2
+      image: nginxinc/nginx-unprivileged:stable-bullseye
+      securityContext:
+        runAsUser: 1000
+EOF
+
+kubectl exec p2 -- curl 192.168.56.160:8080
